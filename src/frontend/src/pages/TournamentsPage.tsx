@@ -38,10 +38,13 @@ export default function TournamentsPage() {
       const fetched = await fetchTournamentsFromBackend(actor);
       setTournaments(fetched);
       setLastUpdated(new Date());
-    } catch (err) {
-      console.error("Failed to load tournaments:", err);
-    } finally {
       setIsLoading(false);
+    } catch (err) {
+      console.warn("Failed to load tournaments, retrying in 3s…", err);
+      // Keep isLoading true and retry silently — never show an error state
+      setTimeout(() => {
+        refreshTournaments();
+      }, 3000);
     }
   }, [actor]);
 
@@ -50,10 +53,10 @@ export default function TournamentsPage() {
     if (actor) {
       setIsLoading(true);
       refreshTournaments();
-    } else if (!actorLoading) {
-      setIsLoading(false);
     }
-  }, [actor, actorLoading, refreshTournaments]);
+    // Do NOT set isLoading=false when actor is absent — keep skeleton showing
+    // until we actually connect and get data
+  }, [actor, refreshTournaments]);
 
   // Poll every 5 seconds for real-time updates
   useEffect(() => {

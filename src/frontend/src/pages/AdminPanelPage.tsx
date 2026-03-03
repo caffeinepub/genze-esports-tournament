@@ -24,16 +24,17 @@ import { useActor } from "../hooks/useActor";
 import {
   createTournamentInBackend,
   deleteTournamentFromBackend,
+  fetchAllPaymentsFromBackend,
+  fetchAllPlayersFromBackend,
   fetchTournamentsFromBackend,
+  updatePaymentStatusInBackend,
+  updatePlayerStatusInBackend,
 } from "../utils/backendService";
-import type { FrontendTournament } from "../utils/backendService";
-import {
-  getPayments,
-  getPlayers,
-  savePayments,
-  savePlayers,
-} from "../utils/seedData";
-import type { Payment, Player } from "../utils/seedData";
+import type {
+  FrontendPayment,
+  FrontendPlayer,
+  FrontendTournament,
+} from "../utils/backendService";
 
 type AdminTab = "dashboard" | "tournaments" | "players" | "payments";
 
@@ -42,13 +43,14 @@ export default function AdminPanelPage() {
   const { actor, isFetching: actorLoading } = useActor();
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
   const [tournaments, setTournaments] = useState<FrontendTournament[]>([]);
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [payments, setPayments] = useState<Payment[]>([]);
+  const [players, setPlayers] = useState<FrontendPlayer[]>([]);
+  const [payments, setPayments] = useState<FrontendPayment[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isFetchingTournaments, setIsFetchingTournaments] = useState(false);
+  const [isFetchingPlayers, setIsFetchingPlayers] = useState(false);
+  const [isFetchingPayments, setIsFetchingPayments] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
-  const [backendError, setBackendError] = useState<string | null>(null);
 
   // New tournament form
   const [newTournament, setNewTournament] = useState({
@@ -69,41 +71,99 @@ export default function AdminPanelPage() {
 
   const UPI_ID = "7087568640@fam";
 
+  // Helper to get or refresh admin token
+  const getAdminToken = useCallback(async (): Promise<string> => {
+    let token = localStorage.getItem("genze_admin_token") || "";
+    if (!token && actor) {
+      token = await actor.authenticateAdmin(
+        "genZeSports2026@gmail.com",
+        "GenZe@2026",
+      );
+      localStorage.setItem("genze_admin_token", token);
+    }
+    return token;
+  }, [actor]);
+
   // ─── Load tournaments from backend ─────────────────────────────────────────
   const loadTournaments = useCallback(async () => {
     if (!actor) return;
     setIsFetchingTournaments(true);
-    setBackendError(null);
-    try {
-      const fetched = await fetchTournamentsFromBackend(actor);
-      setTournaments(fetched);
-    } catch (err) {
-      console.error("Failed to fetch tournaments from backend:", err);
-      setBackendError(
-        "Could not load tournaments from blockchain. Please refresh.",
-      );
-    } finally {
-      setIsFetchingTournaments(false);
+    let attempt = 0;
+    while (true) {
+      try {
+        const fetched = await fetchTournamentsFromBackend(actor);
+        setTournaments(fetched);
+        setIsFetchingTournaments(false);
+        return;
+      } catch (err) {
+        attempt += 1;
+        console.warn(
+          `Fetch tournaments attempt ${attempt} failed, retrying in 3s…`,
+          err,
+        );
+        await new Promise((r) => setTimeout(r, 3000));
+      }
     }
   }, [actor]);
 
-  // Load players/payments from localStorage
-  useEffect(() => {
-    setPlayers(getPlayers());
-    setPayments(getPayments());
-  }, []);
+  // ─── Load players from backend ──────────────────────────────────────────────
+  const loadPlayers = useCallback(async () => {
+    if (!actor || tournaments.length === 0) return;
+    setIsFetchingPlayers(true);
+    try {
+      const fetched = await fetchAllPlayersFromBackend(actor, tournaments);
+      setPlayers(fetched);
+    } catch (err) {
+      console.warn("Failed to fetch players:", err);
+    } finally {
+      setIsFetchingPlayers(false);
+    }
+  }, [actor, tournaments]);
 
+  // ─── Load payments from backend ─────────────────────────────────────────────
+  const loadPayments = useCallback(async () => {
+    if (!actor || players.length === 0) return;
+    setIsFetchingPayments(true);
+    try {
+      const fetched = await fetchAllPaymentsFromBackend(actor, players);
+      // Enrich payment amounts from tournament entry fees
+      const tournamentMap = new Map(tournaments.map((t) => [t.backendId, t]));
+      const enriched = fetched.map((pay) => ({
+        ...pay,
+        amount: tournamentMap.get(pay.tournamentId)?.entryFee ?? pay.amount,
+      }));
+      setPayments(enriched);
+    } catch (err) {
+      console.warn("Failed to fetch payments:", err);
+    } finally {
+      setIsFetchingPayments(false);
+    }
+  }, [actor, players, tournaments]);
+
+  // Load order: actor → tournaments → players → payments
   useEffect(() => {
     if (actor) {
       loadTournaments();
     }
   }, [actor, loadTournaments]);
 
-  // Poll tournaments every 10 seconds while on tournament/dashboard tab
+  useEffect(() => {
+    if (tournaments.length > 0) {
+      loadPlayers();
+    }
+  }, [tournaments, loadPlayers]);
+
+  useEffect(() => {
+    if (players.length > 0) {
+      loadPayments();
+    }
+  }, [players, loadPayments]);
+
+  // Poll all three every 10 seconds
   useEffect(() => {
     if (!actor) return;
-    const interval = setInterval(() => {
-      loadTournaments();
+    const interval = setInterval(async () => {
+      await loadTournaments();
     }, 10000);
     return () => clearInterval(interval);
   }, [actor, loadTournaments]);
@@ -131,18 +191,37 @@ export default function AdminPanelPage() {
       return;
     }
 
-    const token = localStorage.getItem("genze_admin_token") || "";
-
     if (!actor) {
       setTournamentError("Backend not ready. Please wait and try again.");
       return;
     }
 
+    // Use stored token or re-authenticate with retries
+    let token = localStorage.getItem("genze_admin_token") || "";
     if (!token) {
-      setTournamentError(
-        "Admin session expired. Please log out and log in again.",
-      );
-      return;
+      let authOk = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          token = await actor.authenticateAdmin(
+            "genZeSports2026@gmail.com",
+            "GenZe@2026",
+          );
+          localStorage.setItem("genze_admin_token", token);
+          authOk = true;
+          break;
+        } catch (err) {
+          console.warn(`Auth attempt ${attempt + 1} failed:`, err);
+          if (attempt < 2) {
+            await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+          }
+        }
+      }
+      if (!authOk) {
+        setTournamentError(
+          "Backend is busy. Please wait a moment and try again.",
+        );
+        return;
+      }
     }
 
     setIsCreating(true);
@@ -185,15 +264,34 @@ export default function AdminPanelPage() {
   };
 
   const handleDeleteTournament = async (t: FrontendTournament) => {
-    const token = localStorage.getItem("genze_admin_token") || "";
-
     if (!actor) {
       alert("Backend not ready. Please wait.");
       return;
     }
+
+    let token = localStorage.getItem("genze_admin_token") || "";
     if (!token) {
-      alert("Admin session expired. Please log out and log in again.");
-      return;
+      let authOk = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          token = await actor.authenticateAdmin(
+            "genZeSports2026@gmail.com",
+            "GenZe@2026",
+          );
+          localStorage.setItem("genze_admin_token", token);
+          authOk = true;
+          break;
+        } catch (err) {
+          console.warn(`Delete auth attempt ${attempt + 1} failed:`, err);
+          if (attempt < 2) {
+            await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+          }
+        }
+      }
+      if (!authOk) {
+        alert("Backend is busy. Please wait a moment and try again.");
+        return;
+      }
     }
 
     setIsDeleting(t.id);
@@ -208,52 +306,54 @@ export default function AdminPanelPage() {
     }
   };
 
-  const handlePlayerAction = (
-    playerId: string,
+  const handlePlayerAction = async (
+    playerId: number,
     action: "approve" | "reject",
   ) => {
-    const all = getPlayers();
-    const idx = all.findIndex((p) => p.id === playerId);
-    if (idx === -1) return;
-    all[idx].status = action === "approve" ? "approved" : "rejected";
-    savePlayers(all);
-    setPlayers([...all]);
-  };
-
-  const handlePaymentAction = (
-    paymentId: string,
-    action: "approve" | "reject",
-  ) => {
-    const all = getPayments();
-    const idx = all.findIndex((p) => p.id === paymentId);
-    if (idx === -1) return;
-    all[idx].status = action === "approve" ? "approved" : "rejected";
-
-    if (action === "approve") {
-      const payment = all[idx];
-      const allPlayers = getPlayers();
-      const pIdx = allPlayers.findIndex((p) => p.id === payment.playerId);
-      if (pIdx !== -1) {
-        allPlayers[pIdx].status = "approved";
-        savePlayers(allPlayers);
-        setPlayers([...allPlayers]);
-      }
+    if (!actor) return;
+    try {
+      const token = await getAdminToken();
+      await updatePlayerStatusInBackend(
+        actor,
+        token,
+        playerId,
+        action === "approve" ? "approved" : "rejected",
+      );
+      await loadPlayers();
+    } catch (err) {
+      console.error("Failed to update player status:", err);
     }
-
-    savePayments(all);
-    setPayments([...all]);
   };
 
-  const getTournamentName = (tournamentId: string): string => {
-    const t = tournaments.find(
-      (t) =>
-        t.id === tournamentId || `canister-${t.backendId}` === tournamentId,
-    );
-    return t ? t.name : tournamentId;
+  const handlePaymentAction = async (
+    paymentId: number,
+    action: "approve" | "reject",
+  ) => {
+    if (!actor) return;
+    try {
+      const token = await getAdminToken();
+      await updatePaymentStatusInBackend(
+        actor,
+        token,
+        paymentId,
+        action === "approve" ? "approved" : "rejected",
+      );
+      await loadPayments();
+    } catch (err) {
+      console.error("Failed to update payment status:", err);
+    }
+  };
+
+  const getTournamentName = (tournamentId: number): string => {
+    const t = tournaments.find((t) => t.backendId === tournamentId);
+    return t ? t.name : `Tournament #${tournamentId}`;
   };
 
   const pendingPlayers = players.filter((p) => p.status === "pending");
   const pendingPayments = payments.filter((p) => p.status === "pending");
+  const totalRevenue = payments
+    .filter((p) => p.status === "approved")
+    .reduce((s, p) => s + p.amount, 0);
 
   const navItems: { id: AdminTab; label: string; icon: React.ReactNode }[] = [
     {
@@ -494,34 +594,6 @@ export default function AdminPanelPage() {
             </div>
           )}
 
-          {backendError && (
-            <div
-              data-ocid="admin.error_state"
-              className="flex items-center justify-between gap-3 p-3 rounded-xl mb-4"
-              style={{
-                background: "rgba(239,68,68,0.08)",
-                border: "1px solid rgba(239,68,68,0.25)",
-              }}
-            >
-              <p className="font-rajdhani text-sm" style={{ color: "#ef4444" }}>
-                {backendError}
-              </p>
-              <button
-                type="button"
-                onClick={loadTournaments}
-                className="flex items-center gap-1 text-xs font-rajdhani font-600 px-3 py-1 rounded-lg"
-                style={{
-                  background: "rgba(239,68,68,0.15)",
-                  border: "1px solid rgba(239,68,68,0.3)",
-                  color: "#ef4444",
-                }}
-              >
-                <RefreshCw className="w-3 h-3" />
-                Retry
-              </button>
-            </div>
-          )}
-
           {/* ── DASHBOARD ── */}
           {activeTab === "dashboard" && (
             <div>
@@ -541,7 +613,7 @@ export default function AdminPanelPage() {
                   },
                   {
                     label: "Total Players",
-                    value: players.length,
+                    value: isFetchingPlayers ? "…" : players.length,
                     icon: <Users className="w-5 h-5" />,
                     color: "#7209b7",
                   },
@@ -553,7 +625,7 @@ export default function AdminPanelPage() {
                   },
                   {
                     label: "Total Revenue",
-                    value: `₹${payments.filter((p) => p.status === "approved").reduce((s, p) => s + p.amount, 0)}`,
+                    value: `₹${totalRevenue}`,
                     icon: <DollarSign className="w-5 h-5" />,
                     color: "#22c55e",
                   },
@@ -600,6 +672,20 @@ export default function AdminPanelPage() {
                   >
                     Recent Players
                   </h3>
+                  {isFetchingPlayers && players.length === 0 && (
+                    <div className="flex items-center gap-2 py-2">
+                      <Loader2
+                        className="w-4 h-4 animate-spin"
+                        style={{ color: "#ff6b00" }}
+                      />
+                      <span
+                        className="font-rajdhani text-sm"
+                        style={{ color: "#6b6b88" }}
+                      >
+                        Loading players…
+                      </span>
+                    </div>
+                  )}
                   {players
                     .slice(-5)
                     .reverse()
@@ -644,7 +730,7 @@ export default function AdminPanelPage() {
                         </span>
                       </div>
                     ))}
-                  {players.length === 0 && (
+                  {!isFetchingPlayers && players.length === 0 && (
                     <p
                       className="font-rajdhani text-sm"
                       style={{ color: "#6b6b88" }}
@@ -664,6 +750,20 @@ export default function AdminPanelPage() {
                   >
                     Recent Payments
                   </h3>
+                  {isFetchingPayments && payments.length === 0 && (
+                    <div className="flex items-center gap-2 py-2">
+                      <Loader2
+                        className="w-4 h-4 animate-spin"
+                        style={{ color: "#ff6b00" }}
+                      />
+                      <span
+                        className="font-rajdhani text-sm"
+                        style={{ color: "#6b6b88" }}
+                      >
+                        Loading payments…
+                      </span>
+                    </div>
+                  )}
                   {payments
                     .slice(-5)
                     .reverse()
@@ -708,7 +808,7 @@ export default function AdminPanelPage() {
                         </span>
                       </div>
                     ))}
-                  {payments.length === 0 && (
+                  {!isFetchingPayments && payments.length === 0 && (
                     <p
                       className="font-rajdhani text-sm"
                       style={{ color: "#6b6b88" }}
@@ -1236,14 +1336,66 @@ export default function AdminPanelPage() {
           {/* ── PLAYERS ── */}
           {activeTab === "players" && (
             <div>
-              <h2
-                className="font-orbitron font-700 text-xl mb-6"
-                style={{ color: "#e8e8f0" }}
-              >
-                Player Management
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2
+                  className="font-orbitron font-700 text-xl"
+                  style={{ color: "#e8e8f0" }}
+                >
+                  Player Management
+                </h2>
+                <div className="flex items-center gap-2">
+                  {isFetchingPlayers && (
+                    <span
+                      data-ocid="players.loading_state"
+                      className="flex items-center gap-1 text-xs font-rajdhani"
+                      style={{ color: "#6b6b88" }}
+                    >
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      syncing…
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={loadPlayers}
+                    disabled={isFetchingPlayers || !actor}
+                    className="flex items-center gap-1 text-xs font-rajdhani font-600 px-3 py-1.5 rounded-lg transition-all"
+                    style={{
+                      background: "rgba(255,107,0,0.1)",
+                      border: "1px solid rgba(255,107,0,0.3)",
+                      color: isFetchingPlayers ? "#6b6b88" : "#ff6b00",
+                      cursor: isFetchingPlayers ? "not-allowed" : "pointer",
+                    }}
+                  >
+                    <RefreshCw
+                      className={`w-3 h-3 ${isFetchingPlayers ? "animate-spin" : ""}`}
+                    />
+                    Refresh
+                  </button>
+                </div>
+              </div>
               <div className="space-y-3">
-                {players.length === 0 && (
+                {isFetchingPlayers && players.length === 0 && (
+                  <div
+                    data-ocid="players.loading_state"
+                    className="p-8 rounded-xl text-center"
+                    style={{
+                      background: "#12121a",
+                      border: "1px solid #2a2a3a",
+                    }}
+                  >
+                    <Loader2
+                      className="w-6 h-6 animate-spin mx-auto mb-3"
+                      style={{ color: "#ff6b00" }}
+                    />
+                    <p
+                      className="font-rajdhani text-sm"
+                      style={{ color: "#6b6b88" }}
+                    >
+                      Loading players from blockchain…
+                    </p>
+                  </div>
+                )}
+                {!isFetchingPlayers && players.length === 0 && (
                   <div
                     data-ocid="players.empty_state"
                     className="p-8 rounded-xl text-center"
@@ -1319,7 +1471,9 @@ export default function AdminPanelPage() {
                           <button
                             type="button"
                             data-ocid={`players.confirm_button.${idx + 1}`}
-                            onClick={() => handlePlayerAction(p.id, "approve")}
+                            onClick={() =>
+                              handlePlayerAction(p.backendId, "approve")
+                            }
                             className="p-2 rounded-lg transition-all"
                             style={{
                               background: "rgba(34,197,94,0.1)",
@@ -1333,7 +1487,9 @@ export default function AdminPanelPage() {
                           <button
                             type="button"
                             data-ocid={`players.delete_button.${idx + 1}`}
-                            onClick={() => handlePlayerAction(p.id, "reject")}
+                            onClick={() =>
+                              handlePlayerAction(p.backendId, "reject")
+                            }
                             className="p-2 rounded-lg transition-all"
                             style={{
                               background: "rgba(239,68,68,0.1)",
@@ -1356,12 +1512,43 @@ export default function AdminPanelPage() {
           {/* ── PAYMENTS ── */}
           {activeTab === "payments" && (
             <div>
-              <h2
-                className="font-orbitron font-700 text-xl mb-6"
-                style={{ color: "#e8e8f0" }}
-              >
-                Payment Management
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2
+                  className="font-orbitron font-700 text-xl"
+                  style={{ color: "#e8e8f0" }}
+                >
+                  Payment Management
+                </h2>
+                <div className="flex items-center gap-2">
+                  {isFetchingPayments && (
+                    <span
+                      data-ocid="payments.loading_state"
+                      className="flex items-center gap-1 text-xs font-rajdhani"
+                      style={{ color: "#6b6b88" }}
+                    >
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      syncing…
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={loadPayments}
+                    disabled={isFetchingPayments || !actor}
+                    className="flex items-center gap-1 text-xs font-rajdhani font-600 px-3 py-1.5 rounded-lg transition-all"
+                    style={{
+                      background: "rgba(255,107,0,0.1)",
+                      border: "1px solid rgba(255,107,0,0.3)",
+                      color: isFetchingPayments ? "#6b6b88" : "#ff6b00",
+                      cursor: isFetchingPayments ? "not-allowed" : "pointer",
+                    }}
+                  >
+                    <RefreshCw
+                      className={`w-3 h-3 ${isFetchingPayments ? "animate-spin" : ""}`}
+                    />
+                    Refresh
+                  </button>
+                </div>
+              </div>
 
               {/* UPI Info */}
               <div
@@ -1400,7 +1587,28 @@ export default function AdminPanelPage() {
               </div>
 
               <div className="space-y-3">
-                {payments.length === 0 && (
+                {isFetchingPayments && payments.length === 0 && (
+                  <div
+                    data-ocid="payments.loading_state"
+                    className="p-8 rounded-xl text-center"
+                    style={{
+                      background: "#12121a",
+                      border: "1px solid #2a2a3a",
+                    }}
+                  >
+                    <Loader2
+                      className="w-6 h-6 animate-spin mx-auto mb-3"
+                      style={{ color: "#ff6b00" }}
+                    />
+                    <p
+                      className="font-rajdhani text-sm"
+                      style={{ color: "#6b6b88" }}
+                    >
+                      Loading payments from blockchain…
+                    </p>
+                  </div>
+                )}
+                {!isFetchingPayments && payments.length === 0 && (
                   <div
                     data-ocid="payments.empty_state"
                     className="p-8 rounded-xl text-center"
@@ -1461,18 +1669,20 @@ export default function AdminPanelPage() {
                           style={{ color: "#6b6b88" }}
                         >
                           <span>₹{p.amount}</span>
-                          <span>{p.tournamentName}</span>
+                          <span>{getTournamentName(p.tournamentId)}</span>
                           <span>
                             {new Date(p.submittedAt).toLocaleDateString(
                               "en-IN",
                             )}
                           </span>
                         </div>
-                        {p.screenshotData && (
+                        {p.screenshotDataUrl && (
                           <button
                             type="button"
                             data-ocid={`payments.edit_button.${idx + 1}`}
-                            onClick={() => setViewScreenshot(p.screenshotData)}
+                            onClick={() =>
+                              setViewScreenshot(p.screenshotDataUrl)
+                            }
                             className="mt-2 flex items-center gap-1 text-xs font-rajdhani font-600 transition-colors"
                             style={{ color: "#ff6b00" }}
                           >
@@ -1486,7 +1696,9 @@ export default function AdminPanelPage() {
                           <button
                             type="button"
                             data-ocid={`payments.confirm_button.${idx + 1}`}
-                            onClick={() => handlePaymentAction(p.id, "approve")}
+                            onClick={() =>
+                              handlePaymentAction(p.backendId, "approve")
+                            }
                             className="p-2 rounded-lg transition-all"
                             style={{
                               background: "rgba(34,197,94,0.1)",
@@ -1500,7 +1712,9 @@ export default function AdminPanelPage() {
                           <button
                             type="button"
                             data-ocid={`payments.delete_button.${idx + 1}`}
-                            onClick={() => handlePaymentAction(p.id, "reject")}
+                            onClick={() =>
+                              handlePaymentAction(p.backendId, "reject")
+                            }
                             className="p-2 rounded-lg transition-all"
                             style={{
                               background: "rgba(239,68,68,0.1)",

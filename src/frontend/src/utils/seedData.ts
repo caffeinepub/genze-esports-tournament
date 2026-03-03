@@ -111,8 +111,8 @@ export function isAdminLoggedIn(): boolean {
       localStorage.getItem("genze_admin_session") || "null",
     );
     if (!session) return false;
-    // Session expires after 24 hours
-    return session.isAdmin && Date.now() - session.timestamp < 86400000;
+    // Session never expires — admin stays logged in permanently
+    return session.isAdmin === true;
   } catch {
     return false;
   }

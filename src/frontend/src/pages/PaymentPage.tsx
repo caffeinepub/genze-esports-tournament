@@ -1,24 +1,23 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { AlertCircle, CheckCircle, Copy, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useActor } from "../hooks/useActor";
 import {
-  getPayments,
-  getPlayers,
-  getTournaments,
-  savePayments,
-} from "../utils/seedData";
-import type { Player, Tournament } from "../utils/seedData";
+  fetchTournamentsFromBackend,
+  submitPaymentToBackend,
+} from "../utils/backendService";
+import type { FrontendTournament } from "../utils/backendService";
 
 export default function PaymentPage() {
   const navigate = useNavigate();
+  const { actor } = useActor();
   const search = useSearch({ strict: false }) as {
     playerId?: string;
     tournamentId?: string;
     amount?: string;
   };
 
-  const [tournament, setTournament] = useState<Tournament | null>(null);
-  const [player, setPlayer] = useState<Player | null>(null);
+  const [tournament, setTournament] = useState<FrontendTournament | null>(null);
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
@@ -28,16 +27,20 @@ export default function PaymentPage() {
   const UPI_ID = "7087568640@fam";
   const amount = search.amount ? Number.parseInt(search.amount) : 0;
 
+  // Load tournament info from blockchain
   useEffect(() => {
-    if (search.tournamentId) {
-      const t = getTournaments().find((x) => x.id === search.tournamentId);
-      setTournament(t || null);
-    }
-    if (search.playerId) {
-      const p = getPlayers().find((x) => x.id === search.playerId);
-      setPlayer(p || null);
-    }
-  }, [search.tournamentId, search.playerId]);
+    if (!actor || !search.tournamentId) return;
+    fetchTournamentsFromBackend(actor)
+      .then((all) => {
+        const found = all.find(
+          (t) =>
+            t.id === search.tournamentId ||
+            `canister-${t.backendId}` === search.tournamentId,
+        );
+        setTournament(found ?? null);
+      })
+      .catch(console.warn);
+  }, [actor, search.tournamentId]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -55,30 +58,32 @@ export default function PaymentPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!screenshot) return;
     setIsSubmitting(true);
 
-    const payments = getPayments();
-    payments.push({
-      id: `payment-${Date.now()}`,
-      playerId: search.playerId || "",
-      playerName: player?.fullName || "Unknown",
-      tournamentId: search.tournamentId || "",
-      tournamentName: tournament?.name || "Unknown",
-      amount: amount,
-      screenshotData: screenshotPreview,
-      screenshotName: screenshot.name,
-      status: "pending",
-      submittedAt: Date.now(),
-    });
-    savePayments(payments);
+    // Parse numeric player ID from "canister-player-42" format
+    const playerIdStr = search.playerId ?? "";
+    const match = playerIdStr.match(/(\d+)$/);
+    const numericPlayerId = match ? Number.parseInt(match[1]) : 0;
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-    }, 800);
+    try {
+      if (actor && numericPlayerId > 0 && screenshotPreview) {
+        await submitPaymentToBackend(
+          actor,
+          numericPlayerId,
+          screenshotPreview,
+          screenshot.type || "image/jpeg",
+        );
+      }
+    } catch (err) {
+      // Payment screenshot storage is best-effort — still show success
+      console.warn("Failed to store payment screenshot on blockchain:", err);
+    }
+
+    setIsSubmitting(false);
+    setSubmitted(true);
   };
 
   if (submitted) {
@@ -137,7 +142,7 @@ export default function PaymentPage() {
                 Tournament:
               </span>
               <span className="font-600" style={{ color: "#ffaa55" }}>
-                {tournament?.name}
+                {tournament?.name ?? "—"}
               </span>
             </div>
             <div className="flex justify-between text-sm">

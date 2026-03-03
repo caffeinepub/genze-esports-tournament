@@ -17,8 +17,6 @@ import {
   registerPlayerInBackend,
 } from "../utils/backendService";
 import type { FrontendTournament } from "../utils/backendService";
-import { getPlayers, savePlayers } from "../utils/seedData";
-import type { Player } from "../utils/seedData";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -159,28 +157,11 @@ export default function RegisterPage() {
         );
       }
 
-      // Also save player to localStorage so the payment page can find it
+      // Build a local player ID for passing to the payment page
       const localPlayerId =
         backendPlayerId !== null
           ? `canister-player-${backendPlayerId}`
           : `player-${Date.now()}`;
-
-      const newPlayer: Player = {
-        id: localPlayerId,
-        fullName: form.fullName,
-        username: form.username,
-        email: form.email,
-        phone: form.phone,
-        game: form.game as "Free Fire" | "PUBG",
-        gameId: form.gameId,
-        teamName: form.teamName,
-        tournamentId: form.tournamentId,
-        status: "pending",
-        registeredAt: Date.now(),
-      };
-      const players = getPlayers();
-      players.push(newPlayer);
-      savePlayers(players);
 
       setIsSubmitting(false);
       navigate({
