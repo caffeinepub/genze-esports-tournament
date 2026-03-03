@@ -339,32 +339,32 @@
   /* ── Neon red CTA buttons ─────────────────────────────────────── */
 
   .neon-btn-red {
-    background: linear-gradient(135deg, #e63946, #b00020);
+    background: linear-gradient(135deg, #ff6b7a, #e63946);
     color: #fff;
     font-family: "Orbitron", sans-serif;
     font-weight: 700;
     letter-spacing: 0.05em;
-    border: 2px solid #e63946;
+    border: 2px solid #ff6b7a;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 0 8px #e63946, 0 0 18px rgba(230, 57, 70, 0.6), 0 0 36px
-      rgba(230, 57, 70, 0.3);
-    text-shadow: 0 0 6px #e63946, 0 0 12px rgba(230, 57, 70, 0.8), 1px 1px 0
+    box-shadow: 0 0 8px #ff6b7a, 0 0 18px rgba(255, 107, 122, 0.6), 0 0 36px
+      rgba(255, 107, 122, 0.3);
+    text-shadow: 0 0 6px #ff6b7a, 0 0 12px rgba(255, 107, 122, 0.8), 1px 1px 0
       rgba(0, 0, 0, 0.6), -1px -1px 0 rgba(0, 0, 0, 0.6);
   }
 
   .neon-btn-red:hover {
-    background: linear-gradient(135deg, #ff4455, #cc0022);
-    border-color: #ff4455;
-    box-shadow: 0 0 14px #e63946, 0 0 30px rgba(230, 57, 70, 0.8), 0 0 60px
-      rgba(230, 57, 70, 0.4);
+    background: linear-gradient(135deg, #ff8090, #ff4455);
+    border-color: #ff8090;
+    box-shadow: 0 0 14px #ff6b7a, 0 0 30px rgba(255, 107, 122, 0.8), 0 0 60px
+      rgba(255, 107, 122, 0.4);
     transform: translateY(-2px);
   }
 
   .neon-btn-red:active {
     transform: translateY(0px);
-    box-shadow: 0 0 8px #e63946, 0 0 18px rgba(230, 57, 70, 0.6);
+    box-shadow: 0 0 8px #ff6b7a, 0 0 18px rgba(255, 107, 122, 0.6);
   }
 
   .neon-btn-red::before {
@@ -389,26 +389,26 @@
 
   .neon-btn-red-outline {
     background: transparent;
-    color: #ff4455;
+    color: #ff8090;
     font-family: "Orbitron", sans-serif;
     font-weight: 600;
     letter-spacing: 0.05em;
-    border: 2px solid #e63946;
+    border: 2px solid #ff6b7a;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    text-shadow: 0 0 6px #e63946, 0 0 14px rgba(230, 57, 70, 0.7), 1px 1px 0
+    text-shadow: 0 0 6px #ff6b7a, 0 0 14px rgba(255, 107, 122, 0.7), 1px 1px 0
       rgba(0, 0, 0, 0.85), -1px -1px 0 rgba(0, 0, 0, 0.85);
-    box-shadow: 0 0 8px rgba(230, 57, 70, 0.5), 0 0 18px rgba(230, 57, 70, 0.25),
-      inset 0 0 12px rgba(230, 57, 70, 0.08);
+    box-shadow: 0 0 8px rgba(255, 107, 122, 0.5), 0 0 18px
+      rgba(255, 107, 122, 0.25), inset 0 0 12px rgba(255, 107, 122, 0.08);
   }
 
   .neon-btn-red-outline:hover {
-    background: rgba(230, 57, 70, 0.12);
-    border-color: #ff4455;
-    color: #ff7788;
-    box-shadow: 0 0 14px #e63946, 0 0 30px rgba(230, 57, 70, 0.6), 0 0 55px
-      rgba(230, 57, 70, 0.3), inset 0 0 18px rgba(230, 57, 70, 0.1);
+    background: rgba(255, 107, 122, 0.12);
+    border-color: #ff8090;
+    color: #ffaab5;
+    box-shadow: 0 0 14px #ff6b7a, 0 0 30px rgba(255, 107, 122, 0.6), 0 0 55px
+      rgba(255, 107, 122, 0.3), inset 0 0 18px rgba(255, 107, 122, 0.1);
     transform: translateY(-2px);
   }
 
@@ -442,14 +442,18 @@
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.08em;
-    color: #ff8c33;
+    color: #ff6a00;
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
     padding-bottom: 4px;
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.95), -1px -1px 0 rgba(0, 0, 0, 0.95),
-      0 0 6px #ff6a00, 0 0 14px rgba(255, 106, 0, 0.75), 0 0 28px
-      rgba(255, 80, 0, 0.4);
+    text-shadow:
+      0 0 4px #ff6a00,
+      0 0 10px #ff6a00,
+      0 0 20px rgba(255, 106, 0, 0.9),
+      0 0 40px rgba(255, 80, 0, 0.6),
+      1px 1px 0 rgba(0, 0, 0, 0.95),
+      -1px -1px 0 rgba(0, 0, 0, 0.95);
   }
 
   .nav-link::after {
@@ -464,12 +468,12 @@
   }
 
   .nav-link:hover {
-    color: #ff8c33;
+    color: #ffaa55;
     text-shadow:
-      0 0 4px #ff6a00,
-      0 0 10px #ff6a00,
-      0 0 22px rgba(255, 106, 0, 0.9),
-      0 0 45px rgba(255, 80, 0, 0.55),
+      0 0 6px #ff6a00,
+      0 0 14px #ff6a00,
+      0 0 28px rgba(255, 106, 0, 1),
+      0 0 55px rgba(255, 80, 0, 0.7),
       1px 1px 0 rgba(0, 0, 0, 0.95),
       -1px -1px 0 rgba(0, 0, 0, 0.95);
   }
@@ -480,12 +484,12 @@
   }
 
   .nav-link.active {
-    color: #ff8c33;
+    color: #ffaa55;
     text-shadow:
-      0 0 4px #ff6a00,
-      0 0 10px #ff6a00,
-      0 0 22px rgba(255, 106, 0, 0.9),
-      0 0 45px rgba(255, 80, 0, 0.55),
+      0 0 6px #ff6a00,
+      0 0 14px #ff6a00,
+      0 0 28px rgba(255, 106, 0, 1),
+      0 0 55px rgba(255, 80, 0, 0.7),
       1px 1px 0 rgba(0, 0, 0, 0.95),
       -1px -1px 0 rgba(0, 0, 0, 0.95);
   }
