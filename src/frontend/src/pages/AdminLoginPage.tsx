@@ -69,18 +69,22 @@ export default function AdminLoginPage() {
             className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4"
             style={{
               background:
-                "linear-gradient(135deg, rgba(114, 9, 183, 0.2), rgba(255, 107, 0, 0.2))",
-              border: "1px solid rgba(114, 9, 183, 0.4)",
-              boxShadow: "0 0 30px rgba(114, 9, 183, 0.2)",
+                "linear-gradient(135deg, rgba(255, 106, 0, 0.15), rgba(255, 69, 0, 0.1))",
+              border: "2px solid rgba(255, 106, 0, 0.5)",
+              boxShadow:
+                "0 0 20px rgba(255, 106, 0, 0.3), 0 0 40px rgba(255, 106, 0, 0.1)",
             }}
           >
-            <Lock className="w-10 h-10" style={{ color: "#b44fe8" }} />
+            <Lock className="w-10 h-10" style={{ color: "#ff8c33" }} />
           </div>
           <h1
             className="font-orbitron font-800 text-2xl sm:text-3xl mb-2 text-boundary-strong"
             style={{ color: "#f0f0f8" }}
           >
-            Admin <span className="neon-text-purple">Portal</span>
+            Admin{" "}
+            <span className="neon-text-orange neon-text-orange-boundary">
+              Portal
+            </span>
           </h1>
           <p
             className="font-rajdhani text-sm text-boundary"

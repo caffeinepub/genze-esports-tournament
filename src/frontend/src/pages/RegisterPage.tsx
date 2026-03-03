@@ -227,7 +227,7 @@ export default function RegisterPage() {
         </h1>
         <p
           className="font-rajdhani text-base text-boundary"
-          style={{ color: "#d8d8f0" }}
+          style={{ color: "#ff8c33" }}
         >
           Fill in your details to join the tournament
         </p>
@@ -253,7 +253,7 @@ export default function RegisterPage() {
               </div>
               <div
                 className="font-rajdhani text-xs mt-1 text-boundary"
-                style={{ color: "#d8d8f0" }}
+                style={{ color: "#ff8c33" }}
               >
                 {selectedTournament.game} • {selectedTournament.date} at{" "}
                 {selectedTournament.time}
@@ -268,7 +268,7 @@ export default function RegisterPage() {
               </div>
               <div
                 className="text-xs text-boundary"
-                style={{ color: "#c8c8e0" }}
+                style={{ color: "#ff8c33" }}
               >
                 Entry Fee
               </div>
@@ -455,17 +455,15 @@ export default function RegisterPage() {
                   style={{
                     background:
                       form.game === game
-                        ? game === "Free Fire"
-                          ? "linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(230, 57, 70, 0.2))"
-                          : "linear-gradient(135deg, rgba(230, 57, 70, 0.2), rgba(114, 9, 183, 0.2))"
+                        ? "linear-gradient(135deg, rgba(255, 106, 0, 0.18), rgba(255, 69, 0, 0.12))"
                         : "#12121a",
                     border:
                       form.game === game
-                        ? `1px solid ${game === "Free Fire" ? "#ff6b00" : "#e63946"}`
+                        ? "2px solid #ff6a00"
                         : "1px solid #2a2a3a",
                     boxShadow:
                       form.game === game
-                        ? `0 0 15px ${game === "Free Fire" ? "rgba(255, 107, 0, 0.2)" : "rgba(230, 57, 70, 0.2)"}`
+                        ? "0 0 8px #ff6a00, 0 0 18px rgba(255,106,0,0.4)"
                         : "none",
                   }}
                 >
@@ -474,7 +472,7 @@ export default function RegisterPage() {
                   </span>
                   <span
                     className="font-orbitron font-700 text-sm"
-                    style={{ color: "#e8e8f0" }}
+                    style={{ color: "#ff8c33" }}
                   >
                     {game}
                   </span>

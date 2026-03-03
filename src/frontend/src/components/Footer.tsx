@@ -54,7 +54,7 @@ export default function Footer() {
             </div>
             <p
               className="text-sm leading-relaxed mb-6 text-boundary"
-              style={{ color: "#b0b0c8", maxWidth: "320px" }}
+              style={{ color: "#ff8c33", maxWidth: "320px" }}
             >
               India's premier esports tournament platform for Free Fire and
               PUBG. Compete, win, and rise to the top.
@@ -113,12 +113,12 @@ export default function Footer() {
                   <Link
                     to={link.path}
                     className="text-sm transition-colors duration-200 text-boundary"
-                    style={{ color: "#b0b0c8" }}
+                    style={{ color: "#ff8c33" }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.color = "#ff8c33";
+                      (e.currentTarget as HTMLElement).style.color = "#ffaa55";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.color = "#b0b0c8";
+                      (e.currentTarget as HTMLElement).style.color = "#ff8c33";
                     }}
                   >
                     {link.label}
@@ -138,7 +138,7 @@ export default function Footer() {
             </h4>
             <ul
               className="space-y-2 text-sm text-boundary"
-              style={{ color: "#b0b0c8" }}
+              style={{ color: "#ff8c33" }}
             >
               <li>📧 genZeSports2026@gmail.com</li>
               <li>💳 UPI: 7087568640@fam</li>
@@ -153,12 +153,12 @@ export default function Footer() {
           className="mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
           style={{ borderTop: "1px solid #2a2a3a" }}
         >
-          <p className="text-xs text-boundary" style={{ color: "#8888a8" }}>
+          <p className="text-xs text-boundary" style={{ color: "#ff8c33" }}>
             © {year} GenZe Esports. All rights reserved.
           </p>
           <p
             className="text-xs flex items-center gap-1 text-boundary"
-            style={{ color: "#8888a8" }}
+            style={{ color: "#ff8c33" }}
           >
             Built with{" "}
             <Heart className="w-3 h-3 inline" style={{ color: "#ff6b00" }} />{" "}

@@ -48,7 +48,7 @@ export default function TournamentCard({
           background: isFF
             ? "linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(230, 57, 70, 0.08))"
             : "linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(114, 9, 183, 0.08))",
-          borderBottom: "1px solid #2a2a3a",
+          borderBottom: "1px solid rgba(255, 106, 0, 0.3)",
         }}
       >
         <div className="flex items-center gap-3">
@@ -114,8 +114,8 @@ export default function TournamentCard({
         <div
           className="flex items-center justify-between p-3 rounded-lg"
           style={{
-            background: "rgba(114, 9, 183, 0.08)",
-            border: "1px solid rgba(114, 9, 183, 0.2)",
+            background: "rgba(255, 106, 0, 0.06)",
+            border: "1px solid rgba(255, 106, 0, 0.25)",
           }}
         >
           <div className="flex items-center gap-2">

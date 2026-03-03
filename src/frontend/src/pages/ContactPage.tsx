@@ -33,7 +33,7 @@ export default function ContactPage() {
         </h1>
         <p
           className="font-rajdhani text-base text-boundary"
-          style={{ color: "#d8d8f0" }}
+          style={{ color: "#ff8c33" }}
         >
           Have questions? We're here to help!
         </p>
@@ -52,7 +52,7 @@ export default function ContactPage() {
               </h2>
               <p
                 className="font-rajdhani text-sm leading-relaxed text-boundary"
-                style={{ color: "#d8d8f0" }}
+                style={{ color: "#ff8c33" }}
               >
                 For tournament queries, payment issues, or general support,
                 reach out to us through any of the channels below.
@@ -96,7 +96,7 @@ export default function ContactPage() {
                 <div>
                   <div
                     className="font-rajdhani text-xs font-600 tracking-wider uppercase mb-1 text-boundary"
-                    style={{ color: "#d0d0e8" }}
+                    style={{ color: "#ff8c33" }}
                   >
                     {item.label}
                   </div>
@@ -117,7 +117,7 @@ export default function ContactPage() {
             >
               <div
                 className="font-rajdhani text-xs font-600 tracking-wider uppercase mb-3 text-boundary"
-                style={{ color: "#d0d0e8" }}
+                style={{ color: "#ff8c33" }}
               >
                 Follow Us
               </div>

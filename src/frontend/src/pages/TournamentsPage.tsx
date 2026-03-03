@@ -105,7 +105,7 @@ export default function TournamentsPage() {
           </h1>
           <p
             className="font-rajdhani text-base sm:text-lg text-boundary"
-            style={{ color: "#d8d8f0" }}
+            style={{ color: "#ff8c33" }}
           >
             Choose your battle and register before slots fill up
           </p>
@@ -159,7 +159,7 @@ export default function TournamentsPage() {
             <Filter className="w-4 h-4" style={{ color: "#9090b0" }} />
             <span
               className="font-rajdhani text-sm font-600 tracking-wider uppercase text-boundary"
-              style={{ color: "#d8d8f0" }}
+              style={{ color: "#ff8c33" }}
             >
               Filter by Game:
             </span>
@@ -175,16 +175,19 @@ export default function TournamentsPage() {
                 style={{
                   background:
                     filter === f
-                      ? f === "Free Fire"
-                        ? "linear-gradient(135deg, #ff6b00, #e63946)"
-                        : f === "PUBG"
-                          ? "linear-gradient(135deg, #e63946, #7209b7)"
-                          : "linear-gradient(135deg, #ff6b00, #7209b7)"
+                      ? "linear-gradient(135deg, #ff6a00, #ff4500)"
                       : "#12121a",
-                  border: filter === f ? "none" : "1px solid #2a2a3a",
-                  color: filter === f ? "white" : "#c0c0e0",
+                  border:
+                    filter === f ? "2px solid #ff6a00" : "1px solid #2a2a3a",
+                  color: filter === f ? "#fff" : "#c0c0e0",
                   boxShadow:
-                    filter === f ? "0 0 15px rgba(255, 107, 0, 0.3)" : "none",
+                    filter === f
+                      ? "0 0 8px #ff6a00, 0 0 18px rgba(255,106,0,0.5)"
+                      : "none",
+                  textShadow:
+                    filter === f
+                      ? "0 0 6px #ff6a00, 1px 1px 0 rgba(0,0,0,0.6)"
+                      : "none",
                 }}
               >
                 {f === "Free Fire" ? "🔥 " : f === "PUBG" ? "🪖 " : "⚡ "}
@@ -199,7 +202,7 @@ export default function TournamentsPage() {
           <div className="mb-6">
             <span
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#d8d8f0" }}
+              style={{ color: "#ff8c33" }}
             >
               Showing{" "}
               <span style={{ color: "#ff8c33" }}>
@@ -292,7 +295,7 @@ export default function TournamentsPage() {
             </h3>
             <p
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#d8d8f0", maxWidth: "320px", margin: "0 auto" }}
+              style={{ color: "#ff8c33", maxWidth: "320px", margin: "0 auto" }}
             >
               {filter !== "All"
                 ? `No ${filter} tournaments available right now. Check back soon!`

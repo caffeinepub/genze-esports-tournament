@@ -23,7 +23,8 @@ export default function Navigation() {
     <nav
       style={{
         background: "rgba(10, 10, 15, 0.95)",
-        borderBottom: "1px solid #2a2a3a",
+        borderBottom: "1px solid rgba(255, 106, 0, 0.35)",
+        boxShadow: "0 2px 20px rgba(255, 106, 0, 0.15)",
         backdropFilter: "blur(12px)",
         position: "sticky",
         top: 0,
@@ -90,19 +91,25 @@ export default function Navigation() {
               to="/admin/login"
               className="hidden md:flex items-center gap-2 px-4 py-2 rounded text-xs font-orbitron font-600 tracking-wider transition-all duration-300"
               style={{
-                border: "1px solid rgba(114, 9, 183, 0.5)",
-                color: "#b44fe8",
+                border: "2px solid #ff6a00",
+                color: "#ff8c33",
+                boxShadow: "0 0 8px #ff6a00, 0 0 16px rgba(255,106,0,0.4)",
+                textShadow:
+                  "0 0 6px #ff6a00, 1px 1px 0 rgba(0,0,0,0.7), -1px -1px 0 rgba(0,0,0,0.7)",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.background =
-                  "rgba(114, 9, 183, 0.15)";
+                  "rgba(255, 106, 0, 0.12)";
                 (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 0 15px rgba(114, 9, 183, 0.3)";
+                  "0 0 12px #ff6a00, 0 0 28px rgba(255,106,0,0.6)";
+                (e.currentTarget as HTMLElement).style.color = "#ffaa55";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.background =
                   "transparent";
-                (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                (e.currentTarget as HTMLElement).style.boxShadow =
+                  "0 0 8px #ff6a00, 0 0 16px rgba(255,106,0,0.4)";
+                (e.currentTarget as HTMLElement).style.color = "#ff8c33";
               }}
             >
               Admin
@@ -111,7 +118,7 @@ export default function Navigation() {
             <button
               type="button"
               className="md:hidden p-2 rounded"
-              style={{ color: "#a0a0b8" }}
+              style={{ color: "#ff8c33" }}
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -142,7 +149,7 @@ export default function Navigation() {
             <Link
               to="/admin/login"
               className="nav-link text-sm"
-              style={{ color: "#b44fe8" }}
+              style={{ color: "#ff8c33" }}
               onClick={() => setMobileOpen(false)}
             >
               Admin Portal

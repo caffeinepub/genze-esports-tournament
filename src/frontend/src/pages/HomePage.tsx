@@ -89,7 +89,7 @@ export default function HomePage() {
             <p
               className="font-rajdhani text-lg sm:text-xl font-400 mb-8 leading-relaxed text-boundary"
               style={{
-                color: "#e0e0f4",
+                color: "#ff8c33",
                 maxWidth: "520px",
                 opacity: 1,
               }}
@@ -105,7 +105,7 @@ export default function HomePage() {
             >
               <Link
                 to="/tournaments"
-                className="neon-btn-orange px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
+                className="neon-btn-red px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
               >
                 <Zap className="w-4 h-4" />
                 View Tournaments
@@ -114,7 +114,7 @@ export default function HomePage() {
               <Link
                 to="/register"
                 search={{ tournamentId: "" }}
-                className="neon-btn-outline px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
+                className="neon-btn-red-outline px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
               >
                 Register Now
                 <ArrowRight className="w-4 h-4" />
@@ -132,7 +132,7 @@ export default function HomePage() {
                   <span className="text-lg">{item.icon}</span>
                   <span
                     className="font-rajdhani font-600 text-sm tracking-wider text-boundary"
-                    style={{ color: "#d8d8f0" }}
+                    style={{ color: "#ff8c33" }}
                   >
                     {item.label}
                   </span>
@@ -164,7 +164,7 @@ export default function HomePage() {
             </h2>
             <p
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#d0d0e8", maxWidth: "480px", margin: "0 auto" }}
+              style={{ color: "#ff8c33", maxWidth: "480px", margin: "0 auto" }}
             >
               The most trusted esports tournament platform for Indian gamers
             </p>
@@ -225,13 +225,13 @@ export default function HomePage() {
                 </div>
                 <h3
                   className="font-orbitron font-700 text-sm mb-2 text-boundary"
-                  style={{ color: "#f0f0f8" }}
+                  style={{ color: "#ff8c33" }}
                 >
                   {feature.title}
                 </h3>
                 <p
                   className="font-rajdhani text-sm leading-relaxed text-boundary"
-                  style={{ color: "#d0d0e8" }}
+                  style={{ color: "#ffaa55" }}
                 >
                   {feature.desc}
                 </p>
@@ -247,8 +247,8 @@ export default function HomePage() {
         style={{
           background:
             "linear-gradient(135deg, rgba(255, 107, 0, 0.08), rgba(114, 9, 183, 0.08))",
-          borderTop: "1px solid #2a2a3a",
-          borderBottom: "1px solid #2a2a3a",
+          borderTop: "1px solid rgba(255, 106, 0, 0.35)",
+          borderBottom: "1px solid rgba(255, 106, 0, 0.35)",
         }}
       >
         <div className="max-w-3xl mx-auto text-center relative z-10">
@@ -263,7 +263,7 @@ export default function HomePage() {
           </h2>
           <p
             className="font-rajdhani text-base mb-8 text-boundary"
-            style={{ color: "#d8d8f0" }}
+            style={{ color: "#ff8c33" }}
           >
             Join the battle today. Register for a tournament and show the world
             what you're made of.
@@ -271,7 +271,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/tournaments"
-              className="neon-btn-orange px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
+              className="neon-btn-red px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
             >
               <Trophy className="w-4 h-4" />
               Browse Tournaments
@@ -279,7 +279,7 @@ export default function HomePage() {
             <Link
               to="/register"
               search={{ tournamentId: "" }}
-              className="neon-btn-outline px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
+              className="neon-btn-red-outline px-8 py-4 rounded-lg text-sm flex items-center justify-center gap-2"
             >
               Register Now
               <ArrowRight className="w-4 h-4" />

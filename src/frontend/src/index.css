@@ -61,14 +61,14 @@
 
   body {
     background-color: #0a0a0f;
-    color: #ffffff;
+    color: #ff8c33;
     font-family: "Inter", sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     /* Neon-orange ambient boundary on all body text */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9), -1px -1px 2px
-      rgba(0, 0, 0, 0.9), 0 0 8px rgba(255, 100, 0, 0.55), 0 0 18px
-      rgba(255, 80, 0, 0.3);
+      rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 100, 0, 0.7), 0 0 22px
+      rgba(255, 80, 0, 0.45);
   }
 
   /* All headings get a blazing neon-orange boundary glow */
@@ -178,7 +178,7 @@
 
   /* High-contrast readable text for mobile — neon-orange ambient */
   .text-readable {
-    color: #ffffff;
+    color: #ff8c33;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.98), -1px -1px 0 rgba(0, 0, 0, 0.98),
       0 0 6px #ff6a00, 0 0 14px rgba(255, 106, 0, 0.75), 0 0 28px
       rgba(255, 80, 0, 0.4);
@@ -213,27 +213,161 @@
   /* ── Buttons ─────────────────────────────────────────────────── */
 
   .neon-btn-orange {
-    background: linear-gradient(135deg, #ff6a00, #e63946);
-    color: white;
+    background: linear-gradient(135deg, #ff6a00, #ff4500);
+    color: #fff;
     font-family: "Orbitron", sans-serif;
     font-weight: 700;
     letter-spacing: 0.05em;
-    border: none;
+    border: 2px solid #ff6a00;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(255, 106, 0, 0.4), 0 0 30px rgba(255, 106, 0, 0.2);
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.65), -1px -1px 0 rgba(0, 0, 0, 0.65),
-      0 0 8px #ff6a00, 0 0 18px rgba(255, 106, 0, 0.55);
+    box-shadow: 0 0 8px #ff6a00, 0 0 16px #ff6a00, 0 0 32px
+      rgba(255, 106, 0, 0.5), 0 0 60px rgba(255, 80, 0, 0.2);
+    text-shadow: 0 0 6px #ff6a00, 0 0 12px rgba(255, 106, 0, 0.8), 1px 1px 0
+      rgba(0, 0, 0, 0.6), -1px -1px 0 rgba(0, 0, 0, 0.6);
   }
 
   .neon-btn-orange:hover {
-    box-shadow: 0 0 25px rgba(255, 106, 0, 0.75), 0 0 50px
-      rgba(255, 106, 0, 0.45), 0 0 80px rgba(255, 106, 0, 0.2);
+    background: linear-gradient(135deg, #ff7a10, #ff5510);
+    border-color: #ff8c33;
+    box-shadow: 0 0 12px #ff6a00, 0 0 28px #ff6a00, 0 0 55px
+      rgba(255, 106, 0, 0.65), 0 0 100px rgba(255, 80, 0, 0.3);
     transform: translateY(-2px);
   }
 
+  .neon-btn-orange:active {
+    transform: translateY(0px);
+    box-shadow: 0 0 8px #ff6a00, 0 0 18px #ff6a00, 0 0 36px
+      rgba(255, 106, 0, 0.5);
+  }
+
   .neon-btn-orange::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .neon-btn-orange:hover::before {
+    left: 100%;
+  }
+
+  /* neon-btn-purple now also uses neon orange for brand consistency */
+  .neon-btn-purple {
+    background: linear-gradient(135deg, #ff6a00, #ff4500);
+    color: #fff;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border: 2px solid #ff6a00;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px #ff6a00, 0 0 16px #ff6a00, 0 0 32px
+      rgba(255, 106, 0, 0.5), 0 0 60px rgba(255, 80, 0, 0.2);
+    text-shadow: 0 0 6px #ff6a00, 0 0 12px rgba(255, 106, 0, 0.8), 1px 1px 0
+      rgba(0, 0, 0, 0.6), -1px -1px 0 rgba(0, 0, 0, 0.6);
+  }
+
+  .neon-btn-purple:hover {
+    background: linear-gradient(135deg, #ff7a10, #ff5510);
+    border-color: #ff8c33;
+    box-shadow: 0 0 12px #ff6a00, 0 0 28px #ff6a00, 0 0 55px
+      rgba(255, 106, 0, 0.65), 0 0 100px rgba(255, 80, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .neon-btn-purple::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .neon-btn-purple:hover::before {
+    left: 100%;
+  }
+
+  .neon-btn-outline {
+    background: transparent;
+    color: #ff8c33;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border: 2px solid #ff6a00;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 6px #ff6a00, 0 0 14px rgba(255, 106, 0, 0.7), 1px 1px 0
+      rgba(0, 0, 0, 0.85), -1px -1px 0 rgba(0, 0, 0, 0.85);
+    box-shadow: 0 0 8px #ff6a00, 0 0 16px rgba(255, 106, 0, 0.5), 0 0 30px
+      rgba(255, 106, 0, 0.2), inset 0 0 12px rgba(255, 106, 0, 0.08);
+  }
+
+  .neon-btn-outline:hover {
+    background: rgba(255, 106, 0, 0.12);
+    border-color: #ff8c33;
+    color: #ffaa55;
+    box-shadow: 0 0 12px #ff6a00, 0 0 28px rgba(255, 106, 0, 0.7), 0 0 55px
+      rgba(255, 106, 0, 0.35), inset 0 0 18px rgba(255, 106, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .neon-btn-outline:active {
+    transform: translateY(0px);
+  }
+
+  /* ── Neon red CTA buttons ─────────────────────────────────────── */
+
+  .neon-btn-red {
+    background: linear-gradient(135deg, #e63946, #b00020);
+    color: #fff;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border: 2px solid #e63946;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px #e63946, 0 0 18px rgba(230, 57, 70, 0.6), 0 0 36px
+      rgba(230, 57, 70, 0.3);
+    text-shadow: 0 0 6px #e63946, 0 0 12px rgba(230, 57, 70, 0.8), 1px 1px 0
+      rgba(0, 0, 0, 0.6), -1px -1px 0 rgba(0, 0, 0, 0.6);
+  }
+
+  .neon-btn-red:hover {
+    background: linear-gradient(135deg, #ff4455, #cc0022);
+    border-color: #ff4455;
+    box-shadow: 0 0 14px #e63946, 0 0 30px rgba(230, 57, 70, 0.8), 0 0 60px
+      rgba(230, 57, 70, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .neon-btn-red:active {
+    transform: translateY(0px);
+    box-shadow: 0 0 8px #e63946, 0 0 18px rgba(230, 57, 70, 0.6);
+  }
+
+  .neon-btn-red::before {
     content: "";
     position: absolute;
     top: 0;
@@ -249,50 +383,37 @@
     transition: left 0.5s ease;
   }
 
-  .neon-btn-orange:hover::before {
+  .neon-btn-red:hover::before {
     left: 100%;
   }
 
-  .neon-btn-purple {
-    background: linear-gradient(135deg, #7209b7, #b44fe8);
-    color: white;
-    font-family: "Orbitron", sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(114, 9, 183, 0.4), 0 0 30px rgba(114, 9, 183, 0.2);
-    /* Orange boundary even on purple button text */
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.65), -1px -1px 0 rgba(0, 0, 0, 0.65),
-      0 0 8px #ff6a00, 0 0 18px rgba(255, 106, 0, 0.4);
-  }
-
-  .neon-btn-purple:hover {
-    box-shadow: 0 0 25px rgba(114, 9, 183, 0.7), 0 0 50px rgba(114, 9, 183, 0.4);
-    transform: translateY(-2px);
-  }
-
-  .neon-btn-outline {
+  .neon-btn-red-outline {
     background: transparent;
-    color: #ff8c33;
+    color: #ff4455;
     font-family: "Orbitron", sans-serif;
     font-weight: 600;
     letter-spacing: 0.05em;
-    border: 1px solid #ff6a00;
+    border: 2px solid #e63946;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.85), -1px -1px 0 rgba(0, 0, 0, 0.85),
-      0 0 8px #ff6a00, 0 0 18px rgba(255, 106, 0, 0.5);
+    text-shadow: 0 0 6px #e63946, 0 0 14px rgba(230, 57, 70, 0.7), 1px 1px 0
+      rgba(0, 0, 0, 0.85), -1px -1px 0 rgba(0, 0, 0, 0.85);
+    box-shadow: 0 0 8px rgba(230, 57, 70, 0.5), 0 0 18px rgba(230, 57, 70, 0.25),
+      inset 0 0 12px rgba(230, 57, 70, 0.08);
   }
 
-  .neon-btn-outline:hover {
-    background: rgba(255, 106, 0, 0.1);
-    box-shadow: 0 0 15px rgba(255, 106, 0, 0.4), inset 0 0 15px
-      rgba(255, 106, 0, 0.1);
-    color: #ff8c33;
+  .neon-btn-red-outline:hover {
+    background: rgba(230, 57, 70, 0.12);
+    border-color: #ff4455;
+    color: #ff7788;
+    box-shadow: 0 0 14px #e63946, 0 0 30px rgba(230, 57, 70, 0.6), 0 0 55px
+      rgba(230, 57, 70, 0.3), inset 0 0 18px rgba(230, 57, 70, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .neon-btn-red-outline:active {
+    transform: translateY(0px);
   }
 
   /* ── Section heading ─────────────────────────────────────────── */
@@ -321,7 +442,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.08em;
-    color: #e8e8f0;
+    color: #ff8c33;
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
@@ -377,7 +498,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #e0e0f0;
+    color: #ff8c33;
     margin-bottom: 6px;
     display: block;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.95), -1px -1px 0 rgba(0, 0, 0, 0.95),
@@ -389,11 +510,13 @@
 
   .gaming-card {
     background: #12121a;
-    border: 1px solid #2a2a3a;
+    border: 1px solid rgba(255, 106, 0, 0.45);
     border-radius: 8px;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 8px rgba(255, 106, 0, 0.15), inset 0 0 8px
+      rgba(255, 106, 0, 0.04);
   }
 
   .gaming-card::before {
@@ -409,8 +532,9 @@
   }
 
   .gaming-card:hover {
-    border-color: rgba(255, 106, 0, 0.4);
-    box-shadow: 0 0 20px rgba(255, 106, 0, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 106, 0, 0.8);
+    box-shadow: 0 0 20px rgba(255, 106, 0, 0.35), 0 0 40px
+      rgba(255, 106, 0, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
     transform: translateY(-4px);
   }
 
@@ -422,8 +546,8 @@
 
   .gaming-input {
     background: #0d0d15;
-    border: 1px solid #2a2a3a;
-    color: #f0f0f8;
+    border: 1px solid rgba(255, 106, 0, 0.35);
+    color: #ff8c33;
     font-family: "Inter", sans-serif;
     transition: all 0.3s ease;
     border-radius: 6px;
@@ -444,8 +568,8 @@
 
   .gaming-select {
     background: #0d0d15;
-    border: 1px solid #2a2a3a;
-    color: #f0f0f8;
+    border: 1px solid rgba(255, 106, 0, 0.35);
+    color: #ff8c33;
     font-family: "Inter", sans-serif;
     transition: all 0.3s ease;
     border-radius: 6px;
@@ -464,7 +588,7 @@
 
   .gaming-select option {
     background: #12121a;
-    color: #e8e8f0;
+    color: #ff8c33;
   }
 
   /* ── Scanlines ───────────────────────────────────────────────── */
@@ -580,12 +704,13 @@
 
   .stats-card {
     background: linear-gradient(135deg, #12121a, #1a1a26);
-    border: 1px solid #2a2a3a;
+    border: 1px solid rgba(255, 106, 0, 0.4);
     border-radius: 12px;
     text-align: center;
     padding: 2rem;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 12px rgba(255, 106, 0, 0.12);
   }
 
   .stats-card::after {
@@ -602,8 +727,9 @@
 
   .admin-sidebar {
     background: #0d0d15;
-    border-right: 1px solid #2a2a3a;
+    border-right: 1px solid rgba(255, 106, 0, 0.35);
     min-height: 100vh;
+    box-shadow: 2px 0 15px rgba(255, 106, 0, 0.1);
   }
 
   /* ── Table styles ────────────────────────────────────────────── */
@@ -631,7 +757,7 @@
   .gaming-table td {
     padding: 12px 16px;
     border-bottom: 1px solid rgba(42, 42, 58, 0.5);
-    color: #e8e8f0;
+    color: #ff8c33;
     font-size: 0.9rem;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.95), -1px -1px 0 rgba(0, 0, 0, 0.95),
       0 0 6px #ff6a00, 0 0 14px rgba(255, 106, 0, 0.65), 0 0 28px
@@ -715,7 +841,8 @@
 
   .mobile-menu {
     background: #0d0d15;
-    border-bottom: 1px solid #2a2a3a;
+    border-bottom: 1px solid rgba(255, 106, 0, 0.35);
+    box-shadow: 0 4px 15px rgba(255, 106, 0, 0.1);
   }
 
   /* ── Rank badges ─────────────────────────────────────────────── */
@@ -827,11 +954,12 @@
 @keyframes neonPulse {
   0%,
   100% {
-    box-shadow: 0 0 15px rgba(255, 106, 0, 0.4), 0 0 30px rgba(255, 106, 0, 0.2);
+    box-shadow: 0 0 8px #ff6a00, 0 0 16px #ff6a00, 0 0 30px
+      rgba(255, 106, 0, 0.5), 0 0 60px rgba(255, 80, 0, 0.2);
   }
   50% {
-    box-shadow: 0 0 25px #ff6a00, 0 0 50px rgba(255, 106, 0, 0.5), 0 0 80px
-      rgba(255, 106, 0, 0.25);
+    box-shadow: 0 0 14px #ff6a00, 0 0 30px #ff6a00, 0 0 60px
+      rgba(255, 106, 0, 0.7), 0 0 100px rgba(255, 80, 0, 0.35);
   }
 }
 
