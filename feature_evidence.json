@@ -1,0 +1,67 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-remove-the-active-tournaments-section-from-the-homepage-frontend-src-pages-homepage-tsx-this-section-currently-polls-localstorage-and-displays-up-to-3-active-tournaments-eliminate-it-entirely-so-the-homepage-no-longer-shows-any-tournament-listing-or-related-polling-logic",
+      "featureTitle": "Remove the 'Active Tournaments' section from the HomePage (frontend/src/pages/HomePage.tsx). This section currently polls localStorage and displays up to 3 active tournaments. Eliminate it entirely so the homepage no longer shows any tournament listing or related polling logic.",
+      "files": [
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-that-when-an-admin-creates-a-tournament-via-the-adminpanelpage-frontend-src-pages-adminpanelpage-tsx-the-new-tournament-is-immediately-visible-to-all-players-on-the-tournamentspage-frontend-src-pages-tournamentspage-tsx-use-a-combination-of-localstorage-storage-events-and-polling-every-3-seconds-to-propagate-changes-across-browser-tabs-sessions-so-players-see-newly-created-tournaments-without-a-manual-page-refresh",
+      "featureTitle": "Ensure that when an admin creates a tournament via the AdminPanelPage (frontend/src/pages/AdminPanelPage.tsx), the new tournament is immediately visible to all players on the TournamentsPage (frontend/src/pages/TournamentsPage.tsx). Use a combination of localStorage storage events and polling (every 3 seconds) to propagate changes across browser tabs/sessions so players see newly created tournaments without a manual page refresh.",
+      "files": [
+        "frontend/src/pages/AdminPanelPage.tsx",
+        "frontend/src/pages/TournamentsPage.tsx"
+      ],
+      "components": [
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-that-when-a-player-registers-for-a-tournament-via-frontend-src-pages-registerpage-tsx-which-calls-incrementtournamentslots-all-other-players-viewing-the-tournamentspage-and-tournamentcard-see-the-slot-count-increment-by-1-in-near-real-time-the-tournamentspage-and-any-tournament-listing-must-reflect-the-updated-slot-count-within-the-next-polling-cycle-3-seconds-using-localstorage-events-and-polling",
+      "featureTitle": "Ensure that when a player registers for a tournament (via frontend/src/pages/RegisterPage.tsx, which calls incrementTournamentSlots), all other players viewing the TournamentsPage and TournamentCard see the slot count increment by +1 in near real-time. The TournamentsPage and any tournament listing must reflect the updated slot count within the next polling cycle (≤3 seconds) using localStorage events and polling.",
+      "files": [
+        "frontend/src/pages/RegisterPage.tsx",
+        "frontend/src/pages/TournamentsPage.tsx"
+      ],
+      "components": [
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

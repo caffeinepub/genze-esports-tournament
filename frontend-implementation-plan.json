@@ -1,0 +1,71 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Remove Active Tournaments Section & Sync Tournament Visibility + Slot Counts for All Players",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Remove the 'Active Tournaments' section from the HomePage, eliminating the tournament listing and polling logic entirely",
+      "acceptanceCriteria": [
+        "The HomePage renders without any 'Active Tournaments' section or tournament cards",
+        "No polling interval for tournaments remains on the HomePage",
+        "The rest of the HomePage (hero, stats counter, etc.) continues to render correctly"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Remove the 'Active Tournaments' section including the useState hook for tournaments, the useEffect polling interval (setInterval that fetches tournaments every 3 seconds), and the JSX section that renders tournament cards. Keep the hero section and StatsCounter component intact."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Ensure newly created tournaments are immediately visible to all players on the TournamentsPage using localStorage events and 3-second polling",
+      "acceptanceCriteria": [
+        "A tournament created by admin appears on the TournamentsPage within 3 seconds for any open player session",
+        "The TournamentsPage listens for localStorage 'storage' events and re-renders when tournaments are updated",
+        "Polling interval of 3 seconds is active on the TournamentsPage to catch updates"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/TournamentsPage.tsx",
+          "operation": "modify",
+          "description": "Add a useEffect that listens for the 'storage' event on the window object. When the event fires and the key is 'tournaments', refresh the tournaments state by calling getTournaments() from seedData.ts. Ensure the existing 3-second polling interval remains active. Clean up both the storage listener and polling interval when the component unmounts."
+        },
+        {
+          "path": "frontend/src/pages/AdminPanelPage.tsx",
+          "operation": "modify",
+          "description": "After successfully creating a new tournament via the form submission handler, dispatch a custom 'storage' event or directly trigger a localStorage update that other tabs can detect. Ensure saveTournaments() is called to persist the new tournament, then manually dispatch a StorageEvent or update a timestamp key in localStorage to notify other open tabs/sessions of the change."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Ensure slot count updates propagate in near real-time when a player registers, using localStorage events and polling so all viewers see the increment within 3 seconds",
+      "acceptanceCriteria": [
+        "After a player submits a registration, the tournament's registered slot count increases by 1 in the data store",
+        "The TournamentsPage reflects the updated slot count within 3 seconds for all open sessions",
+        "TournamentCard displays the current slot count accurately without requiring a manual page refresh",
+        "The incrementTournamentSlots utility in seedData.ts is correctly called on registration and persisted to localStorage"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/RegisterPage.tsx",
+          "operation": "modify",
+          "description": "After successfully calling incrementTournamentSlots(tournamentId) and saving the new player record, dispatch a custom 'storage' event or update a trigger key in localStorage to notify other tabs of the slot count change. Ensure the increment is persisted before dispatching the event."
+        },
+        {
+          "path": "frontend/src/pages/TournamentsPage.tsx",
+          "operation": "modify",
+          "description": "Ensure the existing storage event listener (added in REQ-2) also refreshes tournaments when the 'storage' event is triggered by registration updates, so the updated slot counts are re-fetched and displayed. The 3-second polling interval will also pick up these changes automatically."
+        },
+        {
+          "path": "frontend/src/components/TournamentCard.tsx",
+          "operation": "modify",
+          "description": "Ensure the component displays the tournament's current registered slot count (tournament.registeredSlots or equivalent property) alongside the total available slots. Verify the prop binding so the card reflects the latest slot data passed from the parent (TournamentsPage)."
+        }
+      ]
+    }
+  ]
+}

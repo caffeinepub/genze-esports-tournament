@@ -1,0 +1,67 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-02T17:45:58.534Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Remove the 'Active Tournaments' section from the HomePage (frontend/src/pages/HomePage.tsx). This section currently polls localStorage and displays up to 3 active tournaments. Eliminate it entirely so the homepage no longer shows any tournament listing or related polling logic.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Ensure that when an admin creates a tournament via the AdminPanelPage (frontend/src/pages/AdminPanelPage.tsx), the new tournament is immediately visible to all players on the TournamentsPage (frontend/src/pages/TournamentsPage.tsx). Use a combination of localStorage storage events and polling (every 3 seconds) to propagate changes across browser tabs/sessions so players see newly created tournaments without a manual page refresh.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/TournamentsPage.tsx",
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/TournamentsPage.tsx",
+          "frontend/src/pages/AdminPanelPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Ensure that when a player registers for a tournament (via frontend/src/pages/RegisterPage.tsx, which calls incrementTournamentSlots), all other players viewing the TournamentsPage and TournamentCard see the slot count increment by +1 in near real-time. The TournamentsPage and any tournament listing must reflect the updated slot count within the next polling cycle (≤3 seconds) using localStorage events and polling.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/RegisterPage.tsx",
+          "frontend/src/pages/TournamentsPage.tsx",
+          "frontend/src/components/TournamentCard.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/RegisterPage.tsx",
+          "frontend/src/pages/TournamentsPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/pages/AdminPanelPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/RegisterPage.tsx",
+    "frontend/src/pages/TournamentsPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
