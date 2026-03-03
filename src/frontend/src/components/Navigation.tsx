@@ -91,25 +91,25 @@ export default function Navigation() {
               to="/admin/login"
               className="hidden md:flex items-center gap-2 px-4 py-2 rounded text-xs font-orbitron font-600 tracking-wider transition-all duration-300"
               style={{
-                border: "2px solid #ff6a00",
-                color: "#ff8c33",
-                boxShadow: "0 0 8px #ff6a00, 0 0 16px rgba(255,106,0,0.4)",
+                border: "2px solid #ff9500",
+                color: "#ff9500",
+                boxShadow: "0 0 8px #ff9500, 0 0 16px rgba(255,149,0,0.4)",
                 textShadow:
-                  "0 0 6px #ff6a00, 1px 1px 0 rgba(0,0,0,0.7), -1px -1px 0 rgba(0,0,0,0.7)",
+                  "0 0 6px #ff9500, 1px 1px 0 rgba(0,0,0,0.7), -1px -1px 0 rgba(0,0,0,0.7)",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.background =
                   "rgba(255, 106, 0, 0.12)";
                 (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 0 12px #ff6a00, 0 0 28px rgba(255,106,0,0.6)";
-                (e.currentTarget as HTMLElement).style.color = "#ffaa55";
+                  "0 0 12px #ff9500, 0 0 28px rgba(255,149,0,0.6)";
+                (e.currentTarget as HTMLElement).style.color = "#ffbe55";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.background =
                   "transparent";
                 (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 0 8px #ff6a00, 0 0 16px rgba(255,106,0,0.4)";
-                (e.currentTarget as HTMLElement).style.color = "#ff8c33";
+                  "0 0 8px #ff9500, 0 0 16px rgba(255,149,0,0.4)";
+                (e.currentTarget as HTMLElement).style.color = "#ff9500";
               }}
             >
               Admin
@@ -149,7 +149,7 @@ export default function Navigation() {
             <Link
               to="/admin/login"
               className="nav-link text-sm"
-              style={{ color: "#ff8c33" }}
+              style={{ color: "#ff9500" }}
               onClick={() => setMobileOpen(false)}
             >
               Admin Portal

@@ -442,16 +442,16 @@
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.08em;
-    color: #ff6a00;
+    color: #ff9500;
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
     padding-bottom: 4px;
     text-shadow:
-      0 0 4px #ff6a00,
-      0 0 10px #ff6a00,
-      0 0 20px rgba(255, 106, 0, 0.9),
-      0 0 40px rgba(255, 80, 0, 0.6),
+      0 0 4px #ff9500,
+      0 0 10px #ff9500,
+      0 0 20px rgba(255, 149, 0, 0.9),
+      0 0 40px rgba(255, 120, 0, 0.6),
       1px 1px 0 rgba(0, 0, 0, 0.95),
       -1px -1px 0 rgba(0, 0, 0, 0.95);
   }
@@ -468,12 +468,12 @@
   }
 
   .nav-link:hover {
-    color: #ffaa55;
+    color: #ffbe55;
     text-shadow:
-      0 0 6px #ff6a00,
-      0 0 14px #ff6a00,
-      0 0 28px rgba(255, 106, 0, 1),
-      0 0 55px rgba(255, 80, 0, 0.7),
+      0 0 6px #ff9500,
+      0 0 14px #ff9500,
+      0 0 28px rgba(255, 149, 0, 1),
+      0 0 55px rgba(255, 120, 0, 0.7),
       1px 1px 0 rgba(0, 0, 0, 0.95),
       -1px -1px 0 rgba(0, 0, 0, 0.95);
   }
@@ -484,12 +484,12 @@
   }
 
   .nav-link.active {
-    color: #ffaa55;
+    color: #ffbe55;
     text-shadow:
-      0 0 6px #ff6a00,
-      0 0 14px #ff6a00,
-      0 0 28px rgba(255, 106, 0, 1),
-      0 0 55px rgba(255, 80, 0, 0.7),
+      0 0 6px #ff9500,
+      0 0 14px #ff9500,
+      0 0 28px rgba(255, 149, 0, 1),
+      0 0 55px rgba(255, 120, 0, 0.7),
       1px 1px 0 rgba(0, 0, 0, 0.95),
       -1px -1px 0 rgba(0, 0, 0, 0.95);
   }
