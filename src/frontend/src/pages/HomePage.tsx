@@ -89,7 +89,7 @@ export default function HomePage() {
             <p
               className="font-rajdhani text-lg sm:text-xl font-400 mb-8 leading-relaxed text-boundary"
               style={{
-                color: "#c8c8e0",
+                color: "#e0e0f4",
                 maxWidth: "520px",
                 opacity: 1,
               }}
@@ -132,7 +132,7 @@ export default function HomePage() {
                   <span className="text-lg">{item.icon}</span>
                   <span
                     className="font-rajdhani font-600 text-sm tracking-wider text-boundary"
-                    style={{ color: "#b0b0cc" }}
+                    style={{ color: "#d8d8f0" }}
                   >
                     {item.label}
                   </span>
@@ -164,7 +164,7 @@ export default function HomePage() {
             </h2>
             <p
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#b8b8d0", maxWidth: "480px", margin: "0 auto" }}
+              style={{ color: "#d0d0e8", maxWidth: "480px", margin: "0 auto" }}
             >
               The most trusted esports tournament platform for Indian gamers
             </p>
@@ -231,7 +231,7 @@ export default function HomePage() {
                 </h3>
                 <p
                   className="font-rajdhani text-sm leading-relaxed text-boundary"
-                  style={{ color: "#b0b0c8" }}
+                  style={{ color: "#d0d0e8" }}
                 >
                   {feature.desc}
                 </p>
@@ -263,7 +263,7 @@ export default function HomePage() {
           </h2>
           <p
             className="font-rajdhani text-base mb-8 text-boundary"
-            style={{ color: "#c0c0d8" }}
+            style={{ color: "#d8d8f0" }}
           >
             Join the battle today. Register for a tournament and show the world
             what you're made of.

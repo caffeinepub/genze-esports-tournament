@@ -57,7 +57,7 @@ function StatCard({ stat, started }: { stat: StatItem; started: boolean }) {
       </div>
       <div
         className="font-rajdhani text-sm font-600 tracking-wider uppercase text-boundary"
-        style={{ color: "#b8b8d0" }}
+        style={{ color: "#d8d8f0" }}
       >
         {stat.label}
       </div>

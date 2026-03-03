@@ -59,7 +59,7 @@ export default function LeaderboardPage() {
           </div>
           <p
             className="font-rajdhani text-base text-boundary"
-            style={{ color: "#b8b8d0" }}
+            style={{ color: "#d8d8f0" }}
           >
             Top approved players across all tournaments
           </p>
@@ -85,7 +85,7 @@ export default function LeaderboardPage() {
                         : "linear-gradient(135deg, #ff6b00, #7209b7)"
                     : "#12121a",
                 border: filter === f ? "none" : "1px solid #2a2a3a",
-                color: filter === f ? "white" : "#6b6b88",
+                color: filter === f ? "white" : "#c0c0e0",
                 boxShadow:
                   filter === f ? "0 0 15px rgba(255, 107, 0, 0.3)" : "none",
               }}
@@ -140,7 +140,7 @@ export default function LeaderboardPage() {
                           </div>
                           <div
                             className="text-xs truncate text-boundary"
-                            style={{ color: "#b0b0c8" }}
+                            style={{ color: "#d0d0e8" }}
                           >
                             {player.teamName || t?.game || player.game}
                           </div>
@@ -197,7 +197,7 @@ export default function LeaderboardPage() {
                           </div>
                           <div
                             className="text-xs text-boundary"
-                            style={{ color: "#b0b0c8" }}
+                            style={{ color: "#d0d0e8" }}
                           >
                             @{player.username}
                           </div>
@@ -215,13 +215,13 @@ export default function LeaderboardPage() {
                         </td>
                         <td
                           className="text-boundary"
-                          style={{ color: "#c0c0d8" }}
+                          style={{ color: "#d8d8f0" }}
                         >
                           {player.teamName || "—"}
                         </td>
                         <td
                           className="text-boundary"
-                          style={{ color: "#c0c0d8" }}
+                          style={{ color: "#d8d8f0" }}
                         >
                           {t?.name || "—"}
                         </td>
@@ -249,7 +249,7 @@ export default function LeaderboardPage() {
             </h3>
             <p
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#b0b0c8" }}
+              style={{ color: "#d8d8f0" }}
             >
               {approvedPlayers.length === 0
                 ? "No approved players yet. Register and get approved to appear here!"

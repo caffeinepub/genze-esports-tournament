@@ -102,7 +102,7 @@ export default function TournamentCard({
           >
             ₹{tournament.entryFee}
           </div>
-          <div className="text-xs text-boundary" style={{ color: "#b0b0c8" }}>
+          <div className="text-xs text-boundary" style={{ color: "#d0d0e8" }}>
             Entry Fee
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function TournamentCard({
             <Trophy className="w-4 h-4" style={{ color: "#b44fe8" }} />
             <span
               className="text-xs font-rajdhani font-600 tracking-wider uppercase text-boundary"
-              style={{ color: "#c0c0d8" }}
+              style={{ color: "#d8d8f0" }}
             >
               Prize Pool
             </span>
@@ -140,11 +140,11 @@ export default function TournamentCard({
           <div className="flex items-center gap-2">
             <Calendar
               className="w-3.5 h-3.5 flex-shrink-0"
-              style={{ color: "#6b6b88" }}
+              style={{ color: "#9090b0" }}
             />
             <span
               className="text-xs text-boundary"
-              style={{ color: "#b8b8d0" }}
+              style={{ color: "#d8d8f0" }}
             >
               {new Date(tournament.date).toLocaleDateString("en-IN", {
                 day: "numeric",
@@ -156,11 +156,11 @@ export default function TournamentCard({
           <div className="flex items-center gap-2">
             <Clock
               className="w-3.5 h-3.5 flex-shrink-0"
-              style={{ color: "#8b8ba8" }}
+              style={{ color: "#9090b0" }}
             />
             <span
               className="text-xs text-boundary"
-              style={{ color: "#b8b8d0" }}
+              style={{ color: "#d8d8f0" }}
             >
               {tournament.time} IST
             </span>
@@ -171,17 +171,17 @@ export default function TournamentCard({
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-2">
-              <Users className="w-3.5 h-3.5" style={{ color: "#6b6b88" }} />
+              <Users className="w-3.5 h-3.5" style={{ color: "#9090b0" }} />
               <span
                 className="text-xs text-boundary"
-                style={{ color: "#b8b8d0" }}
+                style={{ color: "#d8d8f0" }}
               >
                 {slotsLeft} slots left
               </span>
             </div>
             <span
               className="text-xs font-600 text-boundary"
-              style={{ color: slotsLeft < 5 ? "#ff4455" : "#b0b0c8" }}
+              style={{ color: slotsLeft < 5 ? "#ff4455" : "#d8d8f0" }}
             >
               {tournament.slotsUsed}/{tournament.maxSlots}
             </span>

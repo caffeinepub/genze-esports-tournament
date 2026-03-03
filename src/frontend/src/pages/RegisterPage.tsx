@@ -227,7 +227,7 @@ export default function RegisterPage() {
         </h1>
         <p
           className="font-rajdhani text-base text-boundary"
-          style={{ color: "#b8b8d0" }}
+          style={{ color: "#d8d8f0" }}
         >
           Fill in your details to join the tournament
         </p>
@@ -253,7 +253,7 @@ export default function RegisterPage() {
               </div>
               <div
                 className="font-rajdhani text-xs mt-1 text-boundary"
-                style={{ color: "#c0c0d8" }}
+                style={{ color: "#d8d8f0" }}
               >
                 {selectedTournament.game} • {selectedTournament.date} at{" "}
                 {selectedTournament.time}
@@ -266,7 +266,10 @@ export default function RegisterPage() {
               >
                 ₹{selectedTournament.entryFee}
               </div>
-              <div className="text-xs" style={{ color: "#6b6b88" }}>
+              <div
+                className="text-xs text-boundary"
+                style={{ color: "#c8c8e0" }}
+              >
                 Entry Fee
               </div>
             </div>
@@ -287,7 +290,7 @@ export default function RegisterPage() {
                   style={{
                     background: "#0d0d15",
                     border: "1px solid #2a2a3a",
-                    color: "#6b6b88",
+                    color: "#9090b0",
                   }}
                 >
                   <Loader2 className="w-4 h-4 animate-spin" />

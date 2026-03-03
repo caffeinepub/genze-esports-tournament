@@ -105,7 +105,7 @@ export default function TournamentsPage() {
           </h1>
           <p
             className="font-rajdhani text-base sm:text-lg text-boundary"
-            style={{ color: "#b8b8d0" }}
+            style={{ color: "#d8d8f0" }}
           >
             Choose your battle and register before slots fill up
           </p>
@@ -137,7 +137,7 @@ export default function TournamentsPage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
                 Live — updates every 5 seconds
                 {lastUpdated && (
-                  <span style={{ color: "#4a7a5a" }}>
+                  <span style={{ color: "#6ab87a" }}>
                     &nbsp;·{" "}
                     {lastUpdated.toLocaleTimeString("en-IN", {
                       hour: "2-digit",
@@ -156,10 +156,10 @@ export default function TournamentsPage() {
         {/* Filter Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4" style={{ color: "#6b6b88" }} />
+            <Filter className="w-4 h-4" style={{ color: "#9090b0" }} />
             <span
               className="font-rajdhani text-sm font-600 tracking-wider uppercase text-boundary"
-              style={{ color: "#b0b0c8" }}
+              style={{ color: "#d8d8f0" }}
             >
               Filter by Game:
             </span>
@@ -182,7 +182,7 @@ export default function TournamentsPage() {
                           : "linear-gradient(135deg, #ff6b00, #7209b7)"
                       : "#12121a",
                   border: filter === f ? "none" : "1px solid #2a2a3a",
-                  color: filter === f ? "white" : "#6b6b88",
+                  color: filter === f ? "white" : "#c0c0e0",
                   boxShadow:
                     filter === f ? "0 0 15px rgba(255, 107, 0, 0.3)" : "none",
                 }}
@@ -199,7 +199,7 @@ export default function TournamentsPage() {
           <div className="mb-6">
             <span
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#b0b0c8" }}
+              style={{ color: "#d8d8f0" }}
             >
               Showing{" "}
               <span style={{ color: "#ff8c33" }}>
@@ -292,7 +292,7 @@ export default function TournamentsPage() {
             </h3>
             <p
               className="font-rajdhani text-sm text-boundary"
-              style={{ color: "#b0b0c8", maxWidth: "320px", margin: "0 auto" }}
+              style={{ color: "#d8d8f0", maxWidth: "320px", margin: "0 auto" }}
             >
               {filter !== "All"
                 ? `No ${filter} tournaments available right now. Check back soon!`

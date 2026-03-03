@@ -122,7 +122,7 @@ export default function PaymentPage() {
           </div>
           <p
             className="font-rajdhani text-sm leading-relaxed mb-6 text-boundary"
-            style={{ color: "#c0c0d8" }}
+            style={{ color: "#d8d8f0" }}
           >
             Your payment screenshot has been submitted for verification. Our
             admin team will review and approve your registration within 24
@@ -133,13 +133,17 @@ export default function PaymentPage() {
             style={{ background: "#0d0d15", border: "1px solid #2a2a3a" }}
           >
             <div className="flex justify-between text-sm">
-              <span style={{ color: "#6b6b88" }}>Tournament:</span>
+              <span className="text-boundary" style={{ color: "#c8c8e0" }}>
+                Tournament:
+              </span>
               <span className="font-600" style={{ color: "#e8e8f0" }}>
                 {tournament?.name}
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span style={{ color: "#6b6b88" }}>Amount Paid:</span>
+              <span className="text-boundary" style={{ color: "#c8c8e0" }}>
+                Amount Paid:
+              </span>
               <span
                 className="font-orbitron font-700"
                 style={{ color: "#ff6b00" }}
@@ -148,7 +152,9 @@ export default function PaymentPage() {
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span style={{ color: "#6b6b88" }}>UPI ID:</span>
+              <span className="text-boundary" style={{ color: "#c8c8e0" }}>
+                UPI ID:
+              </span>
               <span className="font-600" style={{ color: "#e8e8f0" }}>
                 {UPI_ID}
               </span>
@@ -188,7 +194,7 @@ export default function PaymentPage() {
         </h1>
         <p
           className="font-rajdhani text-base text-boundary"
-          style={{ color: "#b8b8d0" }}
+          style={{ color: "#d8d8f0" }}
         >
           Pay via UPI and upload your payment screenshot
         </p>
@@ -215,7 +221,7 @@ export default function PaymentPage() {
                 </div>
                 <div
                   className="font-rajdhani text-xs mt-1 text-boundary"
-                  style={{ color: "#c0c0d8" }}
+                  style={{ color: "#d8d8f0" }}
                 >
                   {tournament.game} • {tournament.date} at {tournament.time}
                 </div>
@@ -227,7 +233,10 @@ export default function PaymentPage() {
                 >
                   ₹{amount}
                 </div>
-                <div className="text-xs" style={{ color: "#6b6b88" }}>
+                <div
+                  className="text-xs text-boundary"
+                  style={{ color: "#c8c8e0" }}
+                >
                   Entry Fee
                 </div>
               </div>
@@ -256,7 +265,7 @@ export default function PaymentPage() {
           >
             <div
               className="font-rajdhani text-sm mb-1 text-boundary"
-              style={{ color: "#c0c0d8" }}
+              style={{ color: "#d8d8f0" }}
             >
               Pay ₹{amount} to UPI ID:
             </div>
@@ -295,8 +304,8 @@ export default function PaymentPage() {
           <div className="flex flex-col items-center gap-4">
             <div className="text-center">
               <div
-                className="font-rajdhani text-sm mb-3"
-                style={{ color: "#8b8ba8" }}
+                className="font-rajdhani text-sm mb-3 text-boundary"
+                style={{ color: "#d0d0e8" }}
               >
                 Scan QR Code to Pay
               </div>
@@ -318,7 +327,7 @@ export default function PaymentPage() {
               </div>
               <div
                 className="mt-2 font-rajdhani text-xs text-boundary"
-                style={{ color: "#b0b0c8" }}
+                style={{ color: "#d8d8f0" }}
               >
                 UPI ID: {UPI_ID}
               </div>
@@ -338,7 +347,7 @@ export default function PaymentPage() {
                 />
                 <div
                   className="font-rajdhani text-xs leading-relaxed text-boundary"
-                  style={{ color: "#d0c880" }}
+                  style={{ color: "#e8df90" }}
                 >
                   After payment, take a screenshot of the payment confirmation
                   and upload it below. Your registration will be confirmed after
@@ -391,8 +400,8 @@ export default function PaymentPage() {
                       ✓ {screenshot?.name}
                     </p>
                     <p
-                      className="font-rajdhani text-xs mt-1"
-                      style={{ color: "#6b6b88" }}
+                      className="font-rajdhani text-xs mt-1 text-boundary"
+                      style={{ color: "#9090b0" }}
                     >
                       Click to change
                     </p>
@@ -411,7 +420,7 @@ export default function PaymentPage() {
                     </p>
                     <p
                       className="font-rajdhani text-xs text-boundary"
-                      style={{ color: "#b0b0c8" }}
+                      style={{ color: "#d0d0e8" }}
                     >
                       PNG, JPG, JPEG up to 10MB
                     </p>
@@ -452,8 +461,8 @@ export default function PaymentPage() {
 
           {!screenshot && (
             <p
-              className="text-center text-xs mt-2"
-              style={{ color: "#6b6b88" }}
+              className="text-center text-xs mt-2 text-boundary"
+              style={{ color: "#9090b0" }}
             >
               Please upload your payment screenshot to continue
             </p>
